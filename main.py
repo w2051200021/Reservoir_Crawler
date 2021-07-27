@@ -156,13 +156,8 @@ class Crawler:
 
 url = "https://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx"
 
-# target = "石門水庫"
-# dir = "C:\\Users\\user\\Desktop\\碩一\\碩一下\\Reservoir_capacity_crawler\\Shimen_reservoir_data"
-# target = "翡翠水庫"
-# dir = "C:\\Users\\user\\Desktop\\碩一\\碩一下\\Reservoir_capacity_crawler\\Feitsui_reservoir_data"
 
 target = "曾文水庫"
-# dir = "C:\\Users\\user\\Desktop\\碩一\\碩一下\\Reservoir_capacity_crawler\\Nanhua_Reservoir_data"
 dir = "C:\\Users\\user\\Documents\\GitHub\\Reservoir_Crawler\\data\\Zengwen_Reservoir"
 
 crawler = Crawler(
