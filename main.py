@@ -5,8 +5,9 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import date, timedelta
+from all_to_one import AllToOneExcel
 
-class Soup:
+class Get:
     
     def __init__(self, url: str):
         self.session = requests.session()
@@ -32,11 +33,12 @@ class Soup:
 class Post:
     
     def __init__(self, url: str, date):
-        self._soup = Soup(url).soup
-        self.session = requests.session()
+        self._get = Get(url)
+        self._soup = self._get.soup
+        self.session = self._get.session
         self._date = date
      
-    @property
+    
     def get_payload(self):
         payload = {
                 "__VIEWSTATE": self._soup.find_all(id = "__VIEWSTATE")[0]["value"],
@@ -51,31 +53,31 @@ class Post:
     def post_data(self):
         while True:
             try:
-                response = self.session.post(url, data = self.get_payload)
+                response = self.session.post(url, data = self.get_payload())
                 table = pd.read_html(response.text, encoding = "utf-8")[0]
                 return table
             except:
-                rand = np.random.randint(low = 280, high = 320)
+                rand = np.random.randint(low = 10, high = 30)
                 print('-------Post got caught! Take a nap for {} sec.-------'.format(rand))
                 time.sleep(rand)###
-                self.session = requests.session()
+                self._get = Get(url)
 
         
 class Crawler:
 
-    def __init__(self, url: str, reservoir: str):
+    def __init__(self, url: str, reservoir: str, file_dir: str):
+        self.url = url
         self.target = reservoir
+        self.dir = file_dir
     
-    
-    def get_data(self, file_dir: str, end_time: list, start_time = [2003, 1, 1]):
+    def get_data(self, start_time: str, end_time: list, concat: bool):
         if end_time == start_time:
             print("No Data!")
             return None
         
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-    
-        
+        if not os.path.exists(self.dir):
+            os.makedirs(self.dir)
+
         run = True
         temp_date = date(*start_time)
         target_condition = self.target 
@@ -84,6 +86,7 @@ class Crawler:
         total_timer = time.time()
         timer = time.time()
         print('Start the crawler.')
+        
         while run:
             
             stop_condition = (temp_date == date(*end_time) + timedelta(days = 1)) 
@@ -92,20 +95,18 @@ class Crawler:
             if stop_condition:
                 run = False 
                 df = self.processing(df)
-                df.to_csv(dir + "\\{}_{}.csv".format(self.target, file_num), index = False)
+                df.to_csv(self.dir + "\\{}_{}.csv".format(self.target, file_num), index = False)
                 print('Done. Total running time:', timedelta(seconds = round(time.time() - total_timer)))
             elif reset_condition:
                 df = self.processing(df)
-                df.to_csv(dir + "\\{}_{}.csv".format(self.target, file_num), index = False)
+                df.to_csv(self.dir + "\\{}_{}.csv".format(self.target, file_num), index = False)
                 print('Done {}. Running time:'.format(file_num), timedelta(seconds = round(time.time() - timer)))
-                # print('. Sleep for 1 min ...', end = "")
                 file_num += 1
                 reset = True
-                # time.sleep(60)
                 timer = time.time()
-                # print(' Go!')
+
                 
-            post = Post(url, temp_date).post_data
+            post = Post(self.url, temp_date).post_data
             raw_data = post[post.iloc[:, 0] == target_condition].iloc[:, 1:-1]
             raw_data[("_", "日期")] = "{}/{}/{}".format(temp_date.year, temp_date.month, temp_date.day)
             
@@ -114,10 +115,13 @@ class Crawler:
             else:
                 df = pd.concat([df, raw_data], axis = 0)   
             temp_date += timedelta(days = 1)
+        
+        if concat:
+            
+            executor = AllToOneExcel(self.dir, self.target)
+            executor.concat()
 
 
-    
-    
     def to_hour(self, string):
         if string != '--':
             hour = string[:-2].replace("(", "-").split("-")[3]
@@ -157,17 +161,20 @@ url = "https://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx"
 # target = "翡翠水庫"
 # dir = "C:\\Users\\user\\Desktop\\碩一\\碩一下\\Reservoir_capacity_crawler\\Feitsui_reservoir_data"
 
-target = "南化水庫"
-dir = "C:\\Users\\user\\Desktop\\碩一\\碩一下\\Reservoir_capacity_crawler\\Nanhua_Reservoir_data"
+target = "曾文水庫"
+# dir = "C:\\Users\\user\\Desktop\\碩一\\碩一下\\Reservoir_capacity_crawler\\Nanhua_Reservoir_data"
+dir = "C:\\Users\\user\\Documents\\GitHub\\Reservoir_Crawler\\data\\Zengwen_Reservoir"
 
 crawler = Crawler(
             url = url,
-            reservoir = target
+            reservoir = target,
+            file_dir = dir
         )
 
 crawler.get_data(
-            file_dir = dir,
-            end_time = [2021, 7, 27]
+            start_time = [2003, 1, 1],
+            end_time = [2021, 7, 27],
+            concat = True
         )
 
 
