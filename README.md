@@ -4,7 +4,7 @@
 ![alt 文字](https://github.com/w2051200021/Reservoir_Crawler/blob/main/description/figure_1.PNG "網站示意圖")
 
 ### 使用說明
-1. Import the package, input your target reservoir, file directory and instantiate 'Crawler' class. For example,
+1. 載入`crawler`，輸入要查詢的水庫名稱以及檔案儲存位置，建立`Crawler`物件。Import the package, input your target reservoir, file directory and instantiate 'Crawler' class. For example,
 ```Python
 import crawler
 
@@ -17,7 +17,7 @@ crawler = crawler.Crawler(
         )
 ```
 
-2. Input the time interval and start the crawler.
+2. 輸入要查詢的時間區段，開始爬資料。Input the time interval and start the crawler.
 ```Python
 start_time = [2010, 1, 1] # year/month/day
 end_time = [2020, 12, 31]
