@@ -18,7 +18,7 @@ class GetRequest:
             except:
                 rand = np.random.randint(low = 10, high = 30)
                 print('-------Get got caught! Take a nap for {} sec.-------'.format(rand))
-                time.sleep(rand)###
+                time.sleep(rand)
 
     @property
     def headers(self):
@@ -71,12 +71,12 @@ class PostRequest:
         
 class Crawler:
 
-    def __init__(self, url: str, reservoir: str, file_dir: str):
-        self.url = url
+    def __init__(self, reservoir: str, file_dir: str):
+        self.url = "https://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx"
         self.target = reservoir
         self.dir = file_dir
     
-    def get_data(self, start_time: str, end_time: list):
+    def get_data(self, start_time: list, end_time: list):
         if not os.path.exists(self.dir):
             os.makedirs(self.dir)
 
