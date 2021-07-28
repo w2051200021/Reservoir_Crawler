@@ -17,10 +17,10 @@ crawler = crawler.Crawler(
         )
 ```
 
-#### 2. 輸入要查詢的時間區段，開始爬資料。Input the time interval and start the crawler.
+#### 2. 輸入要查詢的時間區段，開始爬資料（註：2003/1/1始有較完整資料)。Input the time interval and start the crawler.
 ```Python
 start_time = [2003, 1, 1] # year/month/day
-end_time = [2021, 7, 28]
+end_time = [2005, 12, 31]
 
 crawler.get_data(
             start_time = start_time,
