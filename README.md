@@ -17,10 +17,10 @@ crawler = crawler.Crawler(
         )
 ```
 
-#### 2. 輸入要查詢的時間區段，開始爬資料。Input the time interval and start the crawler.
+#### 2. 輸入要查詢的時間區段，開始爬資料（註：2003/1/1始有較完整資料)。Input the time interval and start the crawler.
 ```Python
 start_time = [2003, 1, 1] # year/month/day
-end_time = [2021, 7, 28]
+end_time = [2005, 12, 31]
 
 crawler.get_data(
             start_time = start_time,
@@ -30,3 +30,5 @@ crawler.get_data(
 #### 3. 執行畫面：每爬完一年會提示使用者完成的年份以及花費時間（平均爬一年需要2分鐘），結束後也會提示完成以及總花費時間。
 
 
+### 聯絡資訊
+任何疑問或建議歡迎寄信到我的信箱，w2051200021@gmail.com。
