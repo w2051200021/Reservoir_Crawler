@@ -10,7 +10,7 @@ crawler = crawler.Crawler(
         )
 
 start_time = [2003, 1, 1]
-end_time = [2020, 12, 31]
+end_time = [2005, 12, 31]
 
 crawler.get_data(
             start_time = start_time,
