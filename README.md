@@ -30,5 +30,7 @@ crawler.get_data(
 #### 3. 執行畫面：每爬完一年會提示使用者完成的年份以及花費時間（平均爬一年需要2分鐘），結束後也會提示完成以及總花費時間。
 ![alt 文字](https://github.com/w2051200021/Reservoir_Crawler/blob/main/description/figure_2.PNG "執行畫面")
 
+#### 4. 檔案呈現：
+![alt 文字](https://github.com/w2051200021/Reservoir_Crawler/blob/main/description/figure_3.PNG "檔案呈現")
 ### 聯絡資訊
 任何疑問或建議歡迎寄信到我的信箱，w2051200021@gmail.com。
