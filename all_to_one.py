@@ -26,4 +26,4 @@ class AllToOneExcel:
                 df_total = df
             else:
                 df_total = pd.concat([df_total, df])
-        df_total.to_csv(self.dir + "\\" + "{}_{}~{}.csv".format(self.target, first_year, last_year), index = False)
+        df_total.to_csv(self.dir + "\\" + "{}_{}~{}.csv".format(self.target, first_year, last_year), index = False, encoding = "utf_8_sig")

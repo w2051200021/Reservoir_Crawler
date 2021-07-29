@@ -95,12 +95,12 @@ class Crawler:
             
             if stop_condition:
                 df = self.processing(df)
-                df.to_csv(self.dir + "\\{}_{}.csv".format(self.target, file_num), index = False)
+                df.to_csv(self.dir + "\\{}_{}.csv".format(self.target, file_num), index = False, encoding = "utf_8_sig")
                 print('Done. Total running time:', timedelta(seconds = round(time.time() - total_timer)))
                 break
             elif reset_condition:
                 df = self.processing(df)
-                df.to_csv(self.dir + "\\{}_{}.csv".format(self.target, file_num), index = False)
+                df.to_csv(self.dir + "\\{}_{}.csv".format(self.target, file_num), index = False, encoding = "utf_8_sig")
                 print('Done {}. Running time:'.format(file_num), timedelta(seconds = round(time.time() - timer)))
                 file_num += 1
                 reset = True
@@ -140,6 +140,7 @@ class Crawler:
         df['水情時間'] = df['水情時間'].apply(self.to_hour)
         df.iloc[:, -2] = df.iloc[:, -2].apply(lambda x: x.replace("%", ""))
         df = pd.concat([df.iloc[:, -1], df.iloc[:, :-1]], axis = 1)
+        '''
         col_names = [
                     "Date",
                     "Storage Capacity(10000m^3)",
@@ -152,5 +153,7 @@ class Crawler:
                     "Useful Storage(10000m^3)",
                     "Storage Ratio(%)"
         ]
+        
         df.columns = col_names
+        '''
         return df
